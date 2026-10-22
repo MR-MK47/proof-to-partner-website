@@ -7,7 +7,8 @@ export default defineConfig({
   site: 'https://prooftopartner.com',
   output: 'static',
   trailingSlash: 'always',
-  adapter: cloudflare(),
+  adapter: cloudflare({ imageService: 'compile' }),
+  session: false,
   integrations: [sitemap({
     filter: (page) => page !== 'https://prooftopartner.com/404/' && !page.includes('/api/'),
   })],
