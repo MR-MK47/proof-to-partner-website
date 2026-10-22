@@ -43,7 +43,7 @@
     const setStatus = (message: string, state: 'success' | 'error') => { statusBox.textContent = message; statusBox.dataset.state = state; statusBox.classList.remove('hidden'); };
     const loadTurnstile = async () => {
       try {
-        const response = await fetch('/api/config/', { headers: { Accept: 'application/json' } });
+        const response = await fetch('/api/config', { headers: { Accept: 'application/json' } });
         if (!response.ok) return;
         const config = await response.json() as { turnstileSiteKey?: string | null };
         if (!config.turnstileSiteKey || !turnstileContainer || !tokenField) return;
@@ -70,7 +70,7 @@
       const payload: Record<string, string> = {};
       new FormData(form).forEach((value, key) => { payload[key] = String(value); });
       try {
-        const response = await fetch('/api/inquiries/', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) });
+        const response = await fetch('/api/inquiries', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) });
         const result = await response.json() as { ok?: boolean; message?: string; error?: string };
         if (!response.ok || !result.ok) throw new Error(result.error || 'We could not submit your enquiry. Check your details and try again.');
         form.reset(); startField.value = String(Math.floor(Date.now() / 1000)); if (tokenField) tokenField.value = '';
