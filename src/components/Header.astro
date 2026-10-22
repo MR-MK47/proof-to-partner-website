@@ -1,0 +1,10 @@
+---
+import Brand from './Brand.astro';
+import { primaryNavigation } from '../lib/site';
+const currentPath = Astro.url.pathname;
+---
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="relative z-30 border-b border-line bg-paper/95 backdrop-blur"><div class="container-shell flex min-h-[82px] items-center justify-between gap-5"><Brand />
+<nav aria-label="Main navigation" class="hidden items-center gap-7 md:flex">{primaryNavigation.map((item) => <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined} class:list={['text-[0.88rem] font-medium no-underline transition-colors hover:text-brand', currentPath === item.href ? 'text-brand-deep' : 'text-ink-soft']}>{item.label}</a>)}</nav>
+<div class="hidden md:block"><a class="btn-primary !min-h-10 !px-4 !py-2 !text-[0.82rem]" href="/contact/">Start a conversation <span aria-hidden="true">↗</span></a></div>
+<details class="relative md:hidden"><summary class="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-lg border border-line bg-white px-3 text-sm font-semibold text-ink focus-visible:outline-2">Menu <span aria-hidden="true">☰</span></summary><nav aria-label="Mobile navigation" class="absolute right-0 top-14 z-40 flex w-64 flex-col gap-1 rounded-xl border border-line bg-white p-2 shadow-xl">{primaryNavigation.map((item) => <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined} class="rounded-lg px-3 py-3 text-sm font-medium text-ink no-underline hover:bg-paper">{item.label}</a>)}<a href="/contact/" class="mt-1 rounded-lg bg-ink px-3 py-3 text-sm font-semibold text-white no-underline">Start a conversation ↗</a></nav></details></div></header>

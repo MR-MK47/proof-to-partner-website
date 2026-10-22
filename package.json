@@ -1,0 +1,31 @@
+{
+  "name": "proof-to-partner-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "dev": "wrangler types && astro dev",
+    "start": "wrangler types && astro dev",
+    "check": "wrangler types && astro check",
+    "build": "wrangler types && astro check && astro build",
+    "preview": "wrangler types && astro preview",
+    "deploy": "npm run build && wrangler deploy",
+    "typegen": "wrangler types",
+    "db:migrate:local": "wrangler d1 migrations apply proof-to-partner-inquiries --local",
+    "db:migrate:remote": "wrangler d1 migrations apply proof-to-partner-inquiries --remote",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.4.2",
+    "@astrojs/sitemap": "^3.7.0",
+    "astro": "^7.4.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.5",
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.53.0"
+  }
+}
