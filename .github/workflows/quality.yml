@@ -1,0 +1,29 @@
+name: Website quality checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Astro and TypeScript checks
+        run: npm run check
+      - name: Production build
+        run: npm run build
+      - name: Verify routes and SEO output
+        run: node scripts/check-static-output.mjs
