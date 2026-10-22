@@ -15,11 +15,11 @@
   const form = document.querySelector<HTMLFormElement>('#inquiry-form');
   const statusBox = document.querySelector<HTMLDivElement>('#form-status');
   const submitButton = document.querySelector<HTMLButtonElement>('#submit-button');
-  const typeField = document.querySelector<HTMLSelectElement>('#inquiry-type');
+  const typeField = document.querySelector('#inquiry-type') as unknown as HTMLSelectElement | null;
   const companyField = document.querySelector<HTMLInputElement>('#company');
   const categoryField = document.querySelector<HTMLInputElement>('#category');
   const categoryHint = document.querySelector<HTMLParagraphElement>('#category-hint');
-  const timingField = document.querySelector<HTMLSelectElement>('#timing');
+  const timingField = document.querySelector('#timing') as unknown as HTMLSelectElement | null;
   const timingWrap = document.querySelector<HTMLDivElement>('#timing-wrap');
   const startField = document.querySelector<HTMLInputElement>('#form-started-at');
   const tokenField = document.querySelector<HTMLInputElement>('#turnstile-token');
