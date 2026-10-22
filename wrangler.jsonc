@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "proof-to-partner-website",
-  "compatibility_date": "2026-10-22",
+  "compatibility_date": "2026-10-19",
   "compatibility_flags": ["nodejs_compat"],
   "d1_databases": [{
     "binding": "DB",
