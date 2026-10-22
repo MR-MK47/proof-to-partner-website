@@ -88,7 +88,7 @@ const sendEmail = async (
       console.error('[inquiries] Resend returned status', response.status, 'error type', result.name || 'unknown');
       return { ok: false, error: 'email_provider_error' };
     }
-    return { ok: true, id: result.id };
+    return result.id ? { ok: true, id: result.id } : { ok: true };
   } catch (error) {
     console.error('[inquiries] Email request failed', error instanceof Error ? error.name : 'unknown');
     return { ok: false, error: 'email_network_error' };
