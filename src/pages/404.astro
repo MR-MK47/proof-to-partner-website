@@ -1,0 +1,8 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+const title = 'Page Not Found | Proof to Partner';
+const description = 'The page you requested could not be found. Return to Proof to Partner or contact us about your business requirement.';
+---
+<SiteLayout title={title} description={description} canonicalPath="/404/" noindex={true}>
+<section class="grid min-h-[65vh] place-items-center px-5 py-20"><div class="max-w-2xl text-center"><div class="mx-auto grid size-20 place-items-center rounded-3xl bg-mint text-3xl font-semibold text-brand-deep">404</div><p class="eyebrow mt-7">This path is a dead end</p><h1 class="display-heading mt-5 text-5xl font-semibold sm:text-6xl">Let's get you back on track.</h1><p class="prose-copy mx-auto mt-5">The page may have moved, the address may be incorrect, or this route may never have existed. The main site and enquiry form are still a good place to start.</p><div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><a class="btn-primary" href="/">Return home <span aria-hidden="true">↗</span></a><a class="btn-secondary" href="/contact/">Contact Proof to Partner</a></div></div></section>
+</SiteLayout>

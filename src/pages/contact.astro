@@ -1,0 +1,10 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+const title = 'Contact Proof to Partner | Business Enquiry';
+const description = 'Send a buyer requirement, supplier capability introduction or general question to Proof to Partner using the enquiry form.';
+const breadcrumbs = [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact/' }];
+---
+<SiteLayout title={title} description={description} canonicalPath="/contact/" breadcrumbs={breadcrumbs}>
+<section class="section-space"><div class="container-shell grid items-start gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-20"><div class="lg:sticky lg:top-8"><p class="eyebrow">Start a conversation</p><h1 class="display-heading mt-6 text-5xl font-semibold sm:text-6xl">Tell us what you are trying to solve.</h1><p class="prose-copy mt-6 text-lg">Whether you are sourcing a product or service, supplying a capability, or asking a general question, share enough context for us to understand what would be useful.</p><div class="mt-8 border-t border-line pt-6"><p class="text-sm font-semibold">What to expect</p><p class="mt-2 text-sm leading-7 text-muted">We aim to review new enquiries within two business days. This is an operating target, not a guarantee. A human response depends on the business monitoring its inbox and configuring notifications.</p></div><div class="mt-6 rounded-2xl bg-mint p-5"><p class="text-sm font-semibold text-ink">Please keep it appropriate</p><p class="mt-2 text-sm leading-6 text-muted">Do not submit passwords, payment details, confidential materials or personal information you are not authorised to share. We will not automatically forward your enquiry to another business.</p></div></div><div class="card-border p-5 shadow-[0_18px_60px_-45px_rgba(19,40,59,0.3)] sm:p-9"><div class="mb-7"><h2 class="text-2xl font-semibold tracking-tight">Enquiry details</h2><p class="mt-2 text-sm leading-6 text-muted">Fields marked with an asterisk are required. We use this information to understand and respond to your enquiry.</p></div><ContactForm /></div></div></section>
+</SiteLayout>
