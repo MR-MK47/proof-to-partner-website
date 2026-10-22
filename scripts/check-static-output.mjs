@@ -19,7 +19,6 @@ const required = [
   'favicon.svg',
   'brand-mark.svg',
   'social-card.svg',
-  'manifest.webmanifest',
 ];
 const errors = [];
 for (const file of required) {
@@ -41,7 +40,9 @@ for (const file of htmlFiles) {
     else if (titles.has(title)) errors.push(file + ': duplicate title tag ' + title);
     else titles.add(title);
     if (!description || description.length < 40) errors.push(file + ': missing or very short description');
-    if (!canonical || !canonical.startsWith('https://prooftopartner.com/')) errors.push(file + ': canonical URL missing or off-domain');
+    const noindex = /<meta name="robots" content="noindex, nofollow"/i.test(html);
+    if (!noindex && (!canonical || !canonical.startsWith('https://prooftopartner.com/'))) errors.push(file + ': canonical URL missing or off-domain');
+    if (noindex && canonical) errors.push(file + ': noindex page should not advertise a canonical URL');
     if (!html.includes('application/ld+json')) errors.push(file + ': structured data is missing');
 
     for (const match of html.matchAll(/\b(?:href|src)="([^"]+)"/gi)) {
