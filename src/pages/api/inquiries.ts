@@ -102,13 +102,20 @@ const validate = (payload: InquiryPayload): CleanInquiry => {
   const email = textField(payload.email, 'email', 254, true);
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || /[\r\n]/.test(email)) throw new Error('Please enter a valid email address.');
   const company = textField(payload.company ?? '', 'company', 160, type !== 'general');
-  const website = textField(payload.website ?? '', 'website', 300);
+  const websiteInput = textField(payload.website ?? '', 'website', 300);
+  let website = websiteInput;
   if (website) {
+    // Accept convenient entries such as "example.com" while restricting saved URLs to HTTP(S).
+    if (!/^https?:\/\//i.test(website)) {
+      if (/^[a-z][a-z0-9+.-]*:/i.test(website)) throw new Error('Please enter a valid company website URL.');
+      website = 'https://' + website;
+    }
     let parsed: URL;
     try { parsed = new URL(website); } catch { throw new Error('Please enter a valid company website URL.'); }
     if ((parsed.protocol !== 'https:' && parsed.protocol !== 'http:') || !parsed.hostname || parsed.username || parsed.password) {
       throw new Error('Please enter a valid company website URL.');
     }
+    website = parsed.toString();
   }
   const location = textField(payload.location ?? '', 'location', 160);
   const category = textField(payload.category ?? '', 'category', 160, type !== 'general');
