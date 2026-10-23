@@ -1,9 +1,10 @@
-# Copy to .dev.vars for local development; .dev.vars is ignored by git.
-# Replace placeholders locally. Never commit real values.
-RESEND_API_KEY=replace-with-your-resend-api-key
-RESEND_FROM_EMAIL=replace-with-a-verified-sender
-INQUIRY_NOTIFY_TO=replace-with-your-monitored-business-inbox
-RATE_LIMIT_SALT=replace-with-a-long-random-secret
+# Copy to .dev.vars only when you want to configure local email or Turnstile testing.
+# .dev.vars is ignored by git. Keep values blank for basic local form/database testing.
+# Add real credentials only on your own machine. Never commit real values.
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=
+INQUIRY_NOTIFY_TO=
+RATE_LIMIT_SALT=
 TURNSTILE_SECRET_KEY=
 PUBLIC_TURNSTILE_SITE_KEY=
 SEND_ACKNOWLEDGEMENT=false
