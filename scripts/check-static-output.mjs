@@ -40,8 +40,8 @@ for (const file of htmlFiles) {
     else if (titles.has(title)) errors.push(file + ': duplicate title tag ' + title);
     else titles.add(title);
     if (!description || description.length < 40) errors.push(file + ': missing or very short description');
-    const robotsTag = html.match(/<meta\\b(?=[^>]*\\bname=["']robots["'])([^>]+)>/i)?.[0] || '';
-    const noindex = /\\bnoindex\\b/i.test(robotsTag);
+    const robotsTag = html.match(/<meta\b(?=[^>]*\bname=["']robots["'])([^>]+)>/i)?.[0] || '';
+    const noindex = /\bnoindex\b/i.test(robotsTag);
     if (file === '404.html' && !noindex) errors.push(file + ': custom 404 page must include a noindex robots directive');
     if (!noindex && (!canonical || !canonical.startsWith('https://prooftopartner.com/'))) errors.push(file + ': canonical URL missing or off-domain');
     if (noindex && canonical) errors.push(file + ': noindex page should not advertise a canonical URL');
