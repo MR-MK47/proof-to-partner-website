@@ -46,6 +46,31 @@ npx wrangler d1 execute proof-to-partner-inquiries --local --command "SELECT id,
 
 To test the production build locally, stop the dev server with Ctrl+C and run `npm run preview`; use the URL printed in the terminal.
 
+### Troubleshooting: API 404 or D1 binding not found
+
+If a form submission to `/api/inquiries` returns 404 **and** Wrangler says it cannot find the `proof-to-partner-inquiries` database binding, first check that the terminal is in the root of this repository. The same folder should contain `package.json`, `wrangler.jsonc`, and `src/pages/api/inquiries.ts`.
+
+In PowerShell, run:
+
+```powershell
+git remote -v
+Test-Path .\wrangler.jsonc
+Test-Path .\src\pages\api\inquiries.ts
+Select-String -Path .\wrangler.jsonc -Pattern 'database_name|binding'
+```
+
+The configured database name should be `proof-to-partner-inquiries` and its binding should be `DB`. If this is a Git checkout of this repository, update it and reinstall dependencies:
+
+```powershell
+git pull origin main
+npm install
+npm run check
+npm run db:migrate:local
+npm run dev
+```
+
+Stop any already-running development server with `Ctrl+C` before restarting it, and keep the new server terminal open. Run the database command from the same project-root folder. If either `Test-Path` check returns `False`, do not keep retrying Wrangler there—the terminal is in the wrong folder or that local copy does not contain the current repository. The Node `UV_HANDLE_CLOSING` assertion may appear after Wrangler has already failed; resolve the preceding configuration/path error first.
+
 A local `.dev.vars` file is optional. Copy `.dev.vars.example` to `.dev.vars` only when testing email or Turnstile. The example file uses blank values by default. Without Resend credentials, enquiries should still be saved to local D1, but notification email will not be sent. Configure Cloudflare Turnstile site/secret keys together to enable its challenge; omit both during initial local testing. `.dev.vars` is ignored by git. Never paste real secret values into source files or commit them.
 
 Useful commands:
