@@ -6,5 +6,33 @@ const currentPath = Astro.url.pathname;
 <a class="skip-link" href="#main-content">Skip to content</a>
 <header class="relative z-30 border-b border-line bg-paper/95 backdrop-blur"><div class="container-shell flex min-h-[82px] items-center justify-between gap-5"><Brand />
 <nav aria-label="Main navigation" class="hidden items-center gap-7 md:flex">{primaryNavigation.map((item) => <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined} class:list={['text-[0.88rem] font-medium no-underline transition-colors hover:text-brand', currentPath === item.href ? 'text-brand-deep' : 'text-ink-soft']}>{item.label}</a>)}</nav>
-<div class="hidden md:block"><a class="btn-primary !min-h-10 !px-4 !py-2 !text-[0.82rem]" href="/contact/">Start a conversation <span aria-hidden="true">↗</span></a></div>
-<details class="relative md:hidden"><summary class="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-lg border border-line bg-white px-3 text-sm font-semibold text-ink focus-visible:outline-2">Menu <span aria-hidden="true">☰</span></summary><nav aria-label="Mobile navigation" class="absolute right-0 top-14 z-40 flex w-64 flex-col gap-1 rounded-xl border border-line bg-white p-2 shadow-xl">{primaryNavigation.map((item) => <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined} class="rounded-lg px-3 py-3 text-sm font-medium text-ink no-underline hover:bg-paper">{item.label}</a>)}<a href="/contact/" class="mt-1 rounded-lg bg-ink px-3 py-3 text-sm font-semibold text-white no-underline">Start a conversation ↗</a></nav></details></div></header>
+<div class="hidden items-center gap-3 md:flex"><button type="button" data-theme-toggle class="theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode"><span data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Dark mode</span></button><a class="btn-primary !min-h-10 !px-4 !py-2 !text-[0.82rem]" href="/contact/">Start a conversation <span aria-hidden="true">↗</span></a></div>
+<div class="flex items-center gap-2 md:hidden"><button type="button" data-theme-toggle class="theme-toggle theme-toggle-icon-only" aria-label="Switch to dark mode" title="Switch to dark mode"><span data-theme-icon aria-hidden="true">☾</span></button><details class="relative"><summary class="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-lg border border-line bg-white px-3 text-sm font-semibold text-ink focus-visible:outline-2">Menu <span aria-hidden="true">☰</span></summary><nav aria-label="Mobile navigation" class="absolute right-0 top-14 z-40 flex w-64 flex-col gap-1 rounded-xl border border-line bg-white p-2 shadow-xl">{primaryNavigation.map((item) => <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined} class="rounded-lg px-3 py-3 text-sm font-medium text-ink no-underline hover:bg-paper">{item.label}</a>)}<a href="/contact/" class="mt-1 rounded-lg bg-ink px-3 py-3 text-sm font-semibold text-white no-underline">Start a conversation ↗</a></nav></details></div></div></header>
+<script>
+  const themeButtons = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+  const themeColorMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+
+  const applyTheme = (theme: 'light' | 'dark') => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    if (themeColorMeta) themeColorMeta.content = theme === 'dark' ? '#111a20' : '#f7f6f2';
+
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    themeButtons.forEach((button) => {
+      const actionLabel = nextTheme === 'dark' ? 'Switch to dark mode' : 'Switch to light mode';
+      button.setAttribute('aria-label', actionLabel);
+      button.title = actionLabel;
+      const icon = button.querySelector<HTMLElement>('[data-theme-icon]');
+      if (icon) icon.textContent = nextTheme === 'dark' ? '☾' : '☀';
+      const label = button.querySelector<HTMLElement>('[data-theme-label]');
+      if (label) label.textContent = nextTheme === 'dark' ? 'Dark mode' : 'Light mode';
+    });
+  };
+
+  themeButtons.forEach((button) => button.addEventListener('click', () => {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(nextTheme);
+    try { localStorage.setItem('ppt-theme', nextTheme); } catch { /* Theme still works for this page if storage is unavailable. */ }
+  }));
+  applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+</script>
