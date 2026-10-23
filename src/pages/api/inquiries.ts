@@ -110,6 +110,7 @@ const validate = (payload: InquiryPayload): CleanInquiry => {
       if (/^[a-z][a-z0-9+.-]*:/i.test(website)) throw new Error('Please enter a valid company website URL.');
       website = 'https://' + website;
     }
+    if (website.length > 300) throw new Error('Please enter a shorter company website URL.');
     let parsed: URL;
     try { parsed = new URL(website); } catch { throw new Error('Please enter a valid company website URL.'); }
     if ((parsed.protocol !== 'https:' && parsed.protocol !== 'http:') || !parsed.hostname || parsed.username || parsed.password) {
