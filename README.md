@@ -21,21 +21,32 @@ Proof to Partner helps businesses describe genuine commercial requirements and e
 - A D1 database created in your Cloudflare account.
 - A verified sending domain and Resend API key if email notifications are required.
 
-## Local development
+## Local development (Windows PowerShell)
 
-```sh
+1. Install Node.js 22.23.4 or newer compatible Node 22 release and Git for Windows.
+2. Open PowerShell and run:
+
+```powershell
+git clone https://github.com/MR-MK47/proof-to-partner-website.git
+cd proof-to-partner-website
+node --version
 npm install
-cp .dev.vars.example .dev.vars
+npm run check
+npm run build
+node scripts/check-static-output.mjs
+npm run db:migrate:local
 npm run dev
 ```
 
-The local D1 database is managed by Wrangler. Apply migrations locally:
+Open the local URL printed by Wrangler/Astro (normally `http://localhost:4321/`). Keep that terminal open while testing. To verify a saved test enquiry from a second PowerShell window opened in the same project folder, run:
 
-```sh
-npm run db:migrate:local
+```powershell
+npx wrangler d1 execute proof-to-partner-inquiries --local --command "SELECT id, type, name, company, notification_status, created_at FROM inquiries ORDER BY created_at DESC LIMIT 5;"
 ```
 
-`.dev.vars` is ignored by git. Never paste secret values into source files or commit them. Without Resend credentials, enquiries may still be saved to the local D1 database, but notification email will not be sent. Configure Cloudflare Turnstile site/secret keys together to enable its challenge. For local form testing, use Turnstile's documented test keys or omit both Turnstile keys.
+To test the production build locally, stop the dev server with Ctrl+C and run `npm run preview`; use the URL printed in the terminal.
+
+A local `.dev.vars` file is optional. Copy `.dev.vars.example` to `.dev.vars` only when testing email or Turnstile. The example file uses blank values by default. Without Resend credentials, enquiries should still be saved to local D1, but notification email will not be sent. Configure Cloudflare Turnstile site/secret keys together to enable its challenge; omit both during initial local testing. `.dev.vars` is ignored by git. Never paste real secret values into source files or commit them.
 
 Useful commands:
 
