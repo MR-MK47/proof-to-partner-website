@@ -6,7 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://prooftopartner.com',
   output: 'static',
-  trailingSlash: 'always',
+  // API endpoints must accept slashless URLs such as /api/inquiries.
+  // `ignore` avoids Astro dev's 404 behavior for on-demand endpoints with `always`.
+  trailingSlash: 'ignore',
   adapter: cloudflare({ imageService: 'compile' }),
   session: false,
   integrations: [sitemap({
