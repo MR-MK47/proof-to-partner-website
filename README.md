@@ -48,6 +48,8 @@ To test the production build locally, stop the dev server with Ctrl+C and run `n
 
 ### Troubleshooting: API 404 or D1 binding not found
 
+If `/api/config` or `/api/inquiries` returns 404, verify that `astro.config.mjs` has `trailingSlash: 'ignore'`. Astro's `trailingSlash: 'always'` can cause on-demand API endpoints to 404 in development. The public pages can still use trailing-slash links and canonical URLs. Stop the dev server with `Ctrl+C` and restart it after updating the config.
+
 If a form submission to `/api/inquiries` returns 404 **and** Wrangler says it cannot find the `proof-to-partner-inquiries` database binding, first check that the terminal is in the root of this repository. The same folder should contain `package.json`, `wrangler.jsonc`, and `src/pages/api/inquiries.ts`.
 
 In PowerShell, run:
